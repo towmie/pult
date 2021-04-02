@@ -1,0 +1,49 @@
+.products {
+  margin-top: 20px;
+
+  &__container {
+    display: flex;
+    align-items: center;
+  }
+  &__list {
+    width: 50%;
+  }
+
+  &__img-box {
+    width: 50%;
+  }
+  &__img {
+    object-fit: contain;
+    width: 100%;
+  }
+
+  &__item {
+    padding: 10px 0;
+  }
+
+  &__link {
+    font-size: 20px;
+    font-weight: 500;
+    color: #1d9cd8;
+    line-height: 100%;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+
+    transition: all 0.5s;
+  }
+}
+.active {
+  color: #000;
+}
+
+@media (max-width: 1205px) {
+  .products {
+    &__img-box {
+      display: none;
+    }
+    &__list {
+      width: 100%;
+      text-align: center;
+    }
+  }
+}

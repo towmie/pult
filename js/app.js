@@ -19,38 +19,45 @@ function changeImg(e) {
 
 function renderProductInfo(id) {
   infoSection.innerHTML = "";
+  renderInfo(id);
+  showFirstItem();
+  addTab();
+}
+
+function renderInfo(id) {
   const selectedProduct = products[id];
+
   selectedProduct.forEach((item) => {
     const html = `
-    <div class="info__main-wrapper" id="${item.productId}"> 
-    <div class="info__img-wrapper">
-      <h2 class="info__img-title">${item.title}</h2>
-      <img class="info__img" src="${item.imgUrl}" alt="${item.title}" />
-    </div>
-    <div class="info__data">
-      <h2 class="info__title">${item.title}</h2>
-      <p class="info__description">
-      ${item.description}
-      </p>
-      <div class="info__purchase">
-        <button class="info__buy">Купить</button>
-        <div class="info__price">
-          <span class="info__price--old"><s>${item.oldPrice}</s></span>
-          <span class="info__price--new">${item.newPrice}</span>
+      <div class="info__main-wrapper" id="${item.productId}"> 
+      <div class="info__img-wrapper">
+        <h2 class="info__img-title">${item.title}</h2>
+        <img class="info__img" src="${item.imgUrl}" alt="${item.title}" />
+      </div>
+      <div class="info__data">
+        <h2 class="info__title">${item.title}</h2>
+        <p class="info__description">
+        ${item.description}
+        </p>
+        <div class="info__purchase">
+          <button class="info__buy">Купить</button>
+          <div class="info__price">
+            <span class="info__price--old"><s>${item.oldPrice}</s></span>
+            <span class="info__price--new">${item.newPrice}</span>
+          </div>
+        </div>
         </div>
       </div>
-      </div>
-    </div>
-    `;
+      `;
 
     infoSection.insertAdjacentHTML("beforeend", html);
+    renderRecommends(selectedProduct, id);
   });
+}
 
+function showFirstItem() {
   const firstProduct = document.querySelectorAll(".info__main-wrapper")[0];
   firstProduct.classList.add("info__main-wrapper--active");
-
-  renderRecommends(selectedProduct, id);
-  addTab();
 }
 
 //  Recommendations render
@@ -58,6 +65,12 @@ function renderProductInfo(id) {
 function renderRecommends(rec, id) {
   recommendsContainer.innerHTML = "";
 
+  renderList(id);
+  renderListItems(rec);
+  info.scrollIntoView({ behavior: "smooth" });
+}
+
+function renderList(id) {
   let title;
   if (id === "strada" || id === "subwoofers") {
     title = "ВЫБЕРИ ТИП АКУСТИКИ";
@@ -72,24 +85,22 @@ function renderRecommends(rec, id) {
     <ul class="info__additional-list">
     </ul>
     `;
-
   recommendsContainer.insertAdjacentHTML("beforeend", listHtml);
+}
 
+function renderListItems(rec) {
   rec.forEach((item) => {
     const html = `
-          <li class="info__additional-item">
-              <a href="#${item.productId}" class="info__additional-link">
-                  <img class="info__additional-img" src="${item.imgUrl}" alt="${item.title}" />
-              </a>
-          </li>
-        `;
+              <li class="info__additional-item">
+                  <a href="#${item.productId}" class="info__additional-link">
+                      <img class="info__additional-img" src="${item.imgUrl}" alt="${item.title}" />
+                  </a>
+              </li>
+            `;
 
     const recommends = document.querySelector(".info__additional-list");
-
     recommends.insertAdjacentHTML("beforeend", html);
   });
-
-  info.scrollIntoView({ behavior: "smooth" });
 }
 
 // tabs functionality
